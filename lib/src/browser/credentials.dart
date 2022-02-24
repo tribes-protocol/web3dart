@@ -27,11 +27,15 @@ class MetaMaskCredentials extends CredentialsWithKnownAddress
   }
 
   @override
-  Future<Uint8List> signPersonalMessage(Uint8List payload, {int? chainId}) {
-    return ethereum.rawRequest('eth_sign', params: [
-      address.hex,
-      _bytesToData(payload),
-    ]).then(_responseToBytes);
+  Future<Uint8List> signPersonalMessage(
+    Uint8List payload, {
+    int? chainId,
+  }) async {
+    final signature = await ethereum.rawRequest(
+      'personal_sign',
+      params: [payload, address.hex],
+    );
+    return _responseToBytes(signature);
   }
 
   @override
