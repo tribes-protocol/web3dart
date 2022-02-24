@@ -33,7 +33,7 @@ class MetaMaskCredentials extends CredentialsWithKnownAddress
   }) async {
     final signature = await ethereum.rawRequest(
       'personal_sign',
-      params: [payload, address.hex],
+      params: [_bytesToData(payload), address.hex],
     );
     return _responseToBytes(signature);
   }
